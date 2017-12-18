@@ -1,0 +1,140 @@
+#!/usr/bin/python
+
+import sys
+
+
+def oatmeal(price, units):
+    if units == 0:
+        print("oatmeal: %d units at € %d /unit" % (units, price))
+    else:
+        print("oatmeal: %.2f units at € %d /unit" %(units, price))
+    return units * price
+
+
+def wheat(price, units):
+    if units == 0:
+        print("wheat: %d units at € %d /unit" % (units, price))
+    else:
+        print("wheat: %.2f units at € %d /unit" %(units, price))
+    return units * price
+
+
+def corn(price, units):
+    if units == 0:
+        print("corn: %d units at € %d /unit" % (units, price))
+    else:
+        print("corn: %.2f units at € %d /unit" %(units, price))
+    return units * price
+
+
+def barley(price, units):
+    if units == 0:
+        print("barley: %d units at € %d /unit" % (units, price))
+    else:
+        print("barley: %.2f units at € %d /unit" %(units, price))
+    return units * price
+
+
+def soy(price, units):
+    if units == 0:
+        print("soy: %d units at € %d /unit" % (units, price))
+    else:
+        print("soy: %.2f units at € %d /unit" %(units, price))
+    return units * price
+
+
+def resources_listing(n1, n2, n3, n4):
+    print("resources: %d E1, %d E2, %d E3, %d E4\n" %(n1, n2, n3, n4))
+
+
+def total(total):
+    if total == 0:
+        print("total production value: € %d" % (total))
+    else:
+        print("total production value: € %.2f" %(total))
+
+
+def gen_matrix(n1, n2, n3, n4, pa, pb, pm, po, ps):
+    co = [5, 6, 7, 8]
+    mat = [
+        [1, 0, 1, 0, 2, 1, 0, 0, 0, n1],
+        [1, 2, 0, 1, 0, 0, 1, 0, 0, n2],
+        [2, 1, 0, 1, 0, 0, 0, 1, 0, n3],
+        [0, 0, 3, 1, 2, 0, 0, 0, 1, n4],
+        [pa, pb, pm, po, ps, 0, 0, 0, 0, 0]
+    ]
+    for counter in range(4):
+        a = 0
+        max = 0
+        for j in range(5):
+            if mat[4][j] >= a:
+                a = mat[4][j]
+                max = j
+        if a <= 0:
+            result = [0] * 6
+            for i in range(4):
+                if co[i] < 5:
+                    result[co[i]] = mat[i][9]
+            result[5] = mat[4][9]
+            return result
+        a = 1e+16
+        b = 0
+        min = 0
+        for k in range(4):
+            if mat[k][max] != 0:
+                b = mat[k][9] / mat[k][max]
+                if b < a:
+                    a = b
+                    min = k
+        a = mat[min][max]
+        for k in range(10):
+            mat[min][k] = mat[min][k] / a
+        for k in range(5):
+            if k != min:
+                if mat[k][max] != 0:
+                    a = mat[k][max]
+                    for j in range(10):
+                        mat[k][j] = mat[k][j] - mat[min][j] * a
+        co[min] = max
+    result = [0] * 6
+    for i in range(4):
+        if co[i] < 5:
+            result[co[i]] = mat[i][9]
+    result[5] = mat[4][9]
+    return result
+
+
+def main():
+    if len(sys.argv) != 10:
+        print("./307multigrains n1 n2 n3 n4 pa pb pm po ps")
+        exit(84)
+    n1, n2, n3, n4, pa, pb, pm, po, ps = [None, None, None, None, None, None, None, None, None]
+    try:
+        n1 = int(sys.argv[1])
+        n2 = int(sys.argv[2])
+        n3 = int(sys.argv[3])
+        n4 = int(sys.argv[4])
+        pa = int(sys.argv[5])
+        pb = int(sys.argv[6])
+        pm = int(sys.argv[7])
+        po = int(sys.argv[8])
+        ps = int(sys.argv[9])
+        if n1 < 0 or n2 < 0 or n3 < 0 or n4 < 0 or pa < 0 or pb < 0 or pm < 0 or po < 0 or ps < 0:
+            print("Negative value in parameter")
+            exit(84)
+    except ValueError:
+        print ("Invalid parameter")
+        exit(84)
+    resources_listing(n1, n2, n3, n4)
+    result = gen_matrix(n1, n2, n3, n4, pa, pb, pm, po, ps)
+    oatmeal(pa, result[0])
+    wheat(pb, result[1])
+    corn(pm, result[2])
+    barley(po, result[3])
+    soy(ps, result[4])
+    total(-result[5])
+    exit(0)
+
+
+if __name__ == "__main__":
+    main()
