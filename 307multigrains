@@ -1,50 +1,50 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 import sys
 
 
 def oatmeal(price, units):
-    if units == 0:
-        print("oatmeal: %d units at € %d /unit" % (units, price))
+    if units < 0.01:
+        print("oatmeal: 0 units at € %d /unit" % (price))
     else:
         print("oatmeal: %.2f units at € %d /unit" %(units, price))
     return units * price
 
 
 def wheat(price, units):
-    if units == 0:
-        print("wheat: %d units at € %d /unit" % (units, price))
+    if units < 0.01:
+        print("wheat: 0 units at € %d /unit" % (price))
     else:
         print("wheat: %.2f units at € %d /unit" %(units, price))
     return units * price
 
 
 def corn(price, units):
-    if units == 0:
-        print("corn: %d units at € %d /unit" % (units, price))
+    if units < 0.01:
+        print("corn: 0 units at € %d /unit" % (price))
     else:
         print("corn: %.2f units at € %d /unit" %(units, price))
     return units * price
 
 
 def barley(price, units):
-    if units == 0:
-        print("barley: %d units at € %d /unit" % (units, price))
+    if units < 0.01:
+        print("barley: 0 units at € %d /unit" % (price))
     else:
         print("barley: %.2f units at € %d /unit" %(units, price))
     return units * price
 
 
 def soy(price, units):
-    if units == 0:
-        print("soy: %d units at € %d /unit" % (units, price))
+    if units < 0.01:
+        print("soy: 0 units at € %d /unit" % (price))
     else:
         print("soy: %.2f units at € %d /unit" %(units, price))
     return units * price
 
 
 def resources_listing(n1, n2, n3, n4):
-    print("resources: %d E1, %d E2, %d E3, %d E4\n" %(n1, n2, n3, n4))
+    print("resources: %d F1, %d F2, %d F3, %d F4\n" %(n1, n2, n3, n4))
 
 
 def total(total):
